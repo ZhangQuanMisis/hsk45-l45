@@ -147,6 +147,16 @@
   input.name { width:100%; border:2px solid #e6e0f3; border-radius:14px; padding:13px 14px; font-size:16px;
     font-family:inherit; margin-bottom:10px; outline:none; }
   input.name:focus { border-color:#9b83ff; }
+  .review-box{width:100%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:16px;padding:12px;margin:0 0 14px}
+  .review-title{color:#ffdf8e;font-size:14px;font-weight:800;text-align:center;margin-bottom:9px}
+  .review-list{max-height:250px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+  .review-item{background:rgba(255,255,255,.94);border-radius:10px;padding:10px 12px;margin-bottom:8px;color:#3b2e7e;font-size:12.5px;line-height:1.6;text-align:left}
+  .review-meta{font-size:11px;color:#8b83a8;font-weight:700;margin-bottom:3px}
+  .review-q{font-weight:700;margin-bottom:4px}
+  .review-line{margin-top:2px}
+  .wg{color:#d9534f}.wc{color:#2a9d63}
+  .review-ex{color:#7b6b9a;margin-top:4px;font-size:12px}
+  .review-ok{text-align:center;color:#e8dcff;font-size:13px;padding:8px 0}
 </style>
 </head>
 <body>
@@ -183,8 +193,8 @@ const LEVELS = [
      opts:["表现","表明","出现","反映"], a:3,
      ex:"课文原句「这个电影反映的是50年前中国人的生活」。「反映」＝把情况表现出来给人看。"},
     {type:"match", q:"把左右两栏连成正确的搭配", left:["加强","缩短","取代","分布","反映"],
-     right:["不均","管理","时间","问题","传统的支付方式"], a:[1,2,4,0,3],
-     ex:"加强管理、缩短时间、取代传统的支付方式、分布不均、反映问题。"},
+     right:["不均","管理","时间","问题","传统的支付方式","改善","调查"], a:[1,2,4,0,3],
+     ex:"加强管理、缩短时间、取代传统的支付方式、分布不均、反映问题。「改善」「调查」是干扰项，不能与左栏组成课文里的搭配。"},
     {type:"match", q:"把动词和它可以搭配的词语连起来", left:["给予","忽视","板着","打翻","受到"],
      right:["感染","关心","茶具","这个问题","一张臭脸"], a:[1,3,4,2,0],
      ex:"给予关心、忽视这个问题、板着一张臭脸、打翻茶具、受到感染。"}
@@ -201,8 +211,8 @@ const LEVELS = [
      opts:["长成","长在","长达","长到"], a:2,
      ex:"「Adj＋达」表示达到了比较高的程度，如「长达半年」「高达500余米」。搭配的多是正向形容词。"},
     {type:"mcq", q:"他的汉语____一年前有了很大的进步。",
-     opts:["较","比","跟","与"], a:0,
-     ex:"「较＋比较的对象」＝比，多用于书面语：较一年前有了很大的进步。"},
+     opts:["较","跟","与","同"], a:0,
+     ex:"「较＋比较的对象」＝比，多用于书面语：较一年前有了很大的进步。「跟／与／同」要跟「相比」搭配才通顺。"},
     {type:"mcq", q:"____2016年4月____，中国共享经济开始迅速发展。",
      opts:["因……而……","自……以来","从……来看","以上……以下"], a:1,
      ex:"「自＋时间点＋以来」＝从过去某个时间到现在，课文原句「自2016年4月以来」。"},
@@ -215,12 +225,15 @@ const LEVELS = [
     {type:"mcq", q:"「相当多的家庭矛盾，都来自家人回家进门时的表情」中「相当」的意思是：",
      opts:["非常","刚刚","一直","大约"], a:0,
      ex:"「相当＋Adj／V」＝很、非常：相当不容易、对附近相当熟悉。"},
-    {type:"mcq", q:"____进家门____，先用镜子看看自己是否把坏情绪带回来了。",
-     opts:["在","刚","当","临"], a:3,
-     ex:"「临＋V＋前／时」＝在某事马上发生的时候；主语要放在「临」之前。"},
-    {type:"order", q:"把词语排成一个通顺的句子", words:["他当老师","是","受到","其父亲","的影响"],
-     a:"他当老师是受到其父亲的影响", alts:["他当老师是受到其父亲的影响。"],
-     ex:"「其」＝他的，较正式，放在名词前：受到其父亲的影响。"},
+    {type:"mcq", q:"____进家门前，先用镜子看看自己是否把坏情绪带回来了。",
+     opts:["面临","接近","临","靠近"], a:2,
+     ex:"「临＋V＋前／时」＝在某事马上发生的时候：临出门前、临睡前。「面临／接近／靠近」都不能放在「进家门前」前面。"},
+    {type:"order", q:"把词语排成通顺的句子（时间状语放句首或主语后都可以）",
+     words:["自2016年4月以来","中国共享经济","在短短几年内","迅速发展","受到世界的关注"],
+     a:"自2016年4月以来中国共享经济在短短几年内迅速发展受到世界的关注",
+     alts:["中国共享经济自2016年4月以来在短短几年内迅速发展受到世界的关注",
+           "在短短几年内中国共享经济自2016年4月以来迅速发展受到世界的关注"],
+     ex:"「自……以来」＝从过去某个时间到现在；时间状语可以放在句首，也可以放在主语后，几种语序都算正确。"},
     {type:"sort", q:"按事情发展的顺序排列下面四句话",
      items:["有位男士工作一天之后，积累了一肚子的火气，回到家时板着一张臭脸。",
             "听到爱人还没做好饭，他就责备了几句。",
@@ -238,8 +251,8 @@ const LEVELS = [
      opts:["高铁","移动支付","共享单车","网络购物"], a:0,
      ex:"开头明确说「高铁位于四大科技之首」，后面讲的都是高铁的作用。"},
     {type:"listen", speak:"截至2019年末，中国高铁长度已达3.5万公里，占全球总里程的六成多。", q:"中国高铁长度占全球总里程的多少？",
-     opts:["三成多","四成多","六成多","八成多"], a:1,
-     ex:"「占全球总里程的六成多」＝超过百分之六十。"},
+     opts:["三成多","四成多","六成多","八成多"], a:2,
+     ex:"录音说的是「占全球总里程的六成多」＝超过百分之六十。"},
     {type:"listen", speak:"以前人们出门必须要带钱包、钥匙和手机，而现在只需一部手机就够了。", q:"现在人们出门只需带什么？",
      opts:["钱包","钥匙","手机","银行卡"], a:2,
      ex:"「而现在只需一部手机就够了」，现在的重点是手机。"},
@@ -259,26 +272,26 @@ const LEVELS = [
   intro:"每篇文章都有阅读倒计时，时间一到文章会自动隐藏，请根据记忆答题。",
   qs:[
     {type:"read", sec:60,
-     passage:"高铁位于四大科技之首，它加快了中国人的出行速度，缩短了其出行的时间。现在中国人往返于北京、上海之间只需8小时。截至2019年末，中国高铁长度已达3.5万公里，占全球总里程的六成多，居世界首位。中国已建成世界上最大的高铁网络，使大大小小550余个城市成为一体。",
+     passage:"周末，我和同学坐高铁去上海。以前坐普通列车要十几个小时，现在只要四个多小时。车上很安静，有人用移动支付买饭，有人用手机处理工作。到了上海，我们还去了新建的地铁站。短短几年，中国人的出行方式发生了很大的变化。",
      qs:[
-       {q:"现在中国人往返于北京、上海之间需要多长时间？", opts:["4小时","18小时","8小时","28小时"], a:2},
-       {q:"关于中国高铁，下面哪项正确？", opts:["长度已达3.5万公里，居世界首位","长度占全球总里程的四成多","连接了550多个国家","是世界上最短的高铁网络"], a:0}
+       {q:"作者周末去了哪里？", opts:["北京","上海","南京","广州"], a:1},
+       {q:"这段话主要说明什么？", opts:["中国人的出行方式变化很大","高铁票价越来越便宜","移动支付不方便","地铁建设很慢"], a:0}
      ],
-     ex:"① 第二句：往返于北京、上海之间只需8小时。② 第三句：高铁长度3.5万公里，占全球六成多，居世界首位。"},
+     ex:"① 第一句：我和同学坐高铁去上海。② 最后一句：短短几年，中国人的出行方式发生了很大的变化。"},
     {type:"read", sec:60,
-     passage:"朋友说过一个病例：一名男士平时跟正常人没什么两样，可开车时，身体每过一会儿就向一侧抖动。他到处求医，却不见效果。原来，若干年前的一天，上小学的他受了委屈，回家一直哭。父亲见此情景，不但没安慰，反而特别凶，做了要踢他的动作。爸爸当年的动作，成了他一辈子的阴影。",
+     passage:"我的一位朋友从小害怕狗。原来，他五岁时曾被一只大狗追过，虽然没有被咬伤，却留下了很深的印象。后来，家里人一再告诉他狗并不可怕，他才慢慢改变了看法。可见，小时候的一次经历，有时会影响人的一生。",
      qs:[
-       {q:"这位男士的问题是什么？", opts:["开车时身体会抖动","不敢开车出门","经常哭","总是跟别人吵架"], a:0},
-       {q:"他的问题是怎么引起的？", opts:["开车时出了事故","小时候父亲的一个动作","生病没有去医院","在学校被同学欺负"], a:1}
+       {q:"这位朋友为什么怕狗？", opts:["小时候被大狗追过","被狗咬伤了","家里人不喜欢狗","他从来没见过狗"], a:0},
+       {q:"根据短文，下面哪句话正确？", opts:["他现在还是很怕狗","家人的开导让他改变了看法","他被狗咬伤过","这件事对他没有影响"], a:1}
      ],
-     ex:"① 第一、二句：开车时身体向一侧抖动，到处求医无效。② 后两句：小时候受委屈回家哭，父亲做了要踢他的动作，成为一辈子的阴影。"},
+     ex:"① 第二句：五岁时被大狗追过，虽没被咬却印象很深。② 第三句：家里人一再告诉他，他才慢慢改变了看法。"},
     {type:"read", sec:55,
-     passage:"有位男士工作一天之后，积累了一肚子的火气，回到家时板着一张臭脸。听到爱人还没做好饭就责备了几句。爱人受了气，就去骂孩子，孩子又冲小猫大声喊。受到惊吓的小猫猛地一跳，把一套茶具打翻，玻璃碎了一地。一家人欢乐的气氛，从他进门的那一刻就被破坏了。",
+     passage:"早晨，李女士因为堵车迟到了，心情很不好。到了办公室，她说话的声音比平时大了许多。同事们受到感染，也一个个板着脸。午饭时，大家才发现，其实谁也没有真的生气，只是一场堵车带来的坏情绪在互相传递。",
      qs:[
-       {q:"小猫为什么把茶具打翻了？", opts:["它想吃东西","它被孩子的喊声吓到了","它高兴地跳起来","它在玩球"], a:1},
-       {q:"这段话主要想说明什么？", opts:["小猫很调皮","做饭太辛苦了","进门前的心情会影响全家","孩子不应该做功课"], a:2}
+       {q:"李女士心情不好是因为什么？", opts:["下雨了","堵车迟到了","和同事吵架了","没吃早饭"], a:1},
+       {q:"同事们为什么也板着脸？", opts:["他们也被坏情绪影响了","他们不喜欢李女士","他们忙着工作","他们生病了"], a:0}
      ],
-     ex:"① 第四句：受到惊吓的小猫猛地一跳，把茶具打翻。② 最后一句：全家欢乐的气氛从他进门那一刻就被破坏了。"}
+     ex:"① 第一句：因为堵车迟到，心情很不好。② 第三、四句：同事们受到感染，坏情绪在互相传递。"}
   ]
 },
 {
@@ -298,21 +311,25 @@ const LEVELS = [
      opts:["以下","以来","以上","来看"], a:2,
      ex:"「数量＋以上／以下」＝高于或低于某个数量或水平：硕士及以上学历。"},
     {type:"match", q:"把词语和它的意思连起来", left:["成就","情景","适当","情况","成果"],
-     right:["事物的状态和发展趋势","数量上的适量","工作、生活中努力得到的结果","事情发生时看到的景象","对国家、社会有重要意义的成绩"], a:[4,3,1,0,2],
-     ex:"成就＝重大成绩；情景＝能看到的景象；适当＝数量适量；情况＝状态和发展趋势；成果＝努力得到的具体结果。"},
-    {type:"mcq", q:"「如果发现脸色难看，不如先给自己一个微笑。如果笑不出来，不如先别着急回家。」这里用的是：",
-     opts:["如果……不如……","自……以来","因……而……","从……来看"], a:0,
-     ex:"课文第⑧段连用三个「如果……，不如……」的排比句，强调进门前要管理好自己的表情。"},
-    {type:"mcq", q:"下面哪句话是错的？",
-     opts:["临出门前，你再检查一下行李。","临上课前，他才发现忘带书了。","临他走时，女朋友忍不住哭了。","临进家门前，先用镜子看看自己。"], a:2,
-     ex:"「临」后面如果有主语，主语要放在「临」之前；应说「他临走时」，不能说「临他走时」。"},
+     right:["事物的状态和发展趋势","数量上的适量","工作、生活中努力得到的结果","事情发生时看到的景象","对国家、社会有重要意义的成绩","事情发生的原因"], a:[4,3,1,0,2],
+     ex:"成就＝重大成绩；情景＝能看到的景象；适当＝数量适量；情况＝状态和发展趋势；成果＝努力得到的具体结果。「事情发生的原因」是干扰项。"},
+    {type:"sort", q:"按事情发展的顺序排列下面四句话",
+     items:["近年来，越来越多的年轻人选择在网上购买生活用品。",
+            "起初，他们担心商品质量没有保证，也不习惯等待送货。",
+            "随着支付方式越来越方便，物流速度不断提高，这种担心逐渐消失了。",
+            "如今，网络购物已经成为许多人日常生活中很自然的一部分。"],
+     a:[0,1,2,3],
+     ex:"顺序说明：先说网络购物流行→再说起初的担心→然后讲担心为什么消失→最后说现在的结果。"},
+    {type:"mcq", q:"「这个办法相当不错，但因费用太高而没有被采用。」这句话的意思是：",
+     opts:["这个办法很不好，所以没有被采用","这个办法不错，可是因为太贵，所以没被采用","这个办法费用不高，因此被采用了","这个办法因为相当不错，所以费用很高"], a:1,
+     ex:"「相当＋Adj」＝很、非常；「因＋原因＋而＋结果」＝因为……所以……。全句＝办法不错，但因为费用高没被采用。"},
     {type:"read", sec:45,
-     passage:"一位美国心理学家发现了著名的「首因效应」，他指出，人际交往中第一印象在头脑中占主要地位。家庭成员之间虽不是第一次见面，但「首因效应」同样起作用。回家，是与家人的「再一次见面」，这一面决定了家人对你这一天状态的判断，并在整个晚上影响大家的情绪和行为。",
+     passage:"面试的时候，前三分钟常常决定一切。有研究发现，考官在最初几十秒内形成的印象，会影响后面的判断。这种第一印象的作用，在人与人的交往中十分常见。所以，见面时的表情、态度，值得我们认真准备。",
      qs:[
-       {q:"「首因效应」指的是什么？", opts:["最后一次印象最重要","第一印象占主要地位","见面越多越好","家人之间不起作用"], a:1},
-       {q:"根据这段话，回家时的表情为什么重要？", opts:["因为家人是第一次见面","因为它只影响你自己","因为它与心理学无关","因为它决定家人对你这一天状态的判断"], a:3}
+       {q:"短文说，什么常常决定面试的结果？", opts:["最后提问的内容","前三分钟的表现","学历的高低","面试的房间"], a:1},
+       {q:"根据这段话，我们应该怎么做？", opts:["尽量少说话","认真准备见面时的表情和态度","只穿正式的服装","避免和考官对视"], a:1}
      ],
-     ex:"① 第一句：第一印象在头脑中占主要地位。② 第三句：这一面决定了家人对你这一天状态的判断。"}
+     ex:"① 第一句：前三分钟常常决定一切。② 最后一句：见面时的表情、态度值得我们认真准备。"}
   ]
 }
 ];
@@ -325,7 +342,8 @@ const S = {
   stars: saved.stars||{}, name: saved.name||'',
   levelScore:0, levelCorrect:0, levelTotal:0,
   answered:false, optOrder:null, chosen:[], pairs:{}, selL:null, matchDone:false,
-  listenLeft:2, readSel:[], readDone:false, timer:null, timeLeft:0
+  listenLeft:2, readSel:[], readDone:false, timer:null, timeLeft:0,
+  wrongs:[], lastGiven:''
 };
 
 /* ================= 工具 ================= */
@@ -335,6 +353,12 @@ function toast(msg){
 }
 function save(){
   try{ localStorage.setItem('hsk45c', JSON.stringify({stars:S.stars, name:S.name})); }catch(e){}
+}
+function escName(s){ return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function setName(v){ S.name=String(v||'').trim().slice(0,12); save(); }
+function recordWrong(q, given, correct){
+  S.wrongs.push({level:S.level, name:LEVELS[S.level].name, type:q.type,
+                 q:q.q||q.speak||'', given:given||'', correct:correct||'', ex:q.ex||''});
 }
 function starTotal(){ return Object.values(S.stars).reduce((a,b)=>a+b,0); }
 function clearTimer(){ if(S.timer){ clearInterval(S.timer); S.timer=null; } }
@@ -378,7 +402,7 @@ if(window.speechSynthesis){
   pickVoice();
   speechSynthesis.onvoiceschanged = pickVoice;
 }
-const SPEECH_RATE = 0.66;   /* 听力语速：0.66 = 原来的 0.88 × 0.75，想再调就改这个数 */
+const SPEECH_RATE = 1.25;   /* 听力语速：1.25 倍速（按学生反馈调快） */
 function speak(text){
   if(!window.speechSynthesis){ toast('这台设备不支持语音朗读'); return false; }
   speechSynthesis.cancel();
@@ -400,7 +424,8 @@ function home(){
     <div class="logo"><img src="${PANDA}" alt="熊猫"></div>
     <h1 class="title">汉语闯关</h1>
     <div class="subtitle">综合课本5 · 第四课～第五课<br>HSK 4—5 级 · 五关闯关 · 约 20 分钟</div>
-    <div style="width:100%;max-width:340px;margin-top:26px">
+    <div style="width:100%;max-width:340px;margin-top:22px">
+      <input class="name" id="nameInput" maxlength="12" placeholder="先输入你的名字（会印在证书上）" value="${escName(S.name)}" oninput="setName(this.value)">
       <button class="btn btn-main" onclick="levelIntro(${maxL<0?0:maxL})">${maxL<0?'▶ 开始闯关':'▶ 继续闯关'}</button>
       <button class="btn btn-sub" onclick="showLevels()">📜 关卡列表</button>
     </div>
@@ -457,6 +482,7 @@ function levelIntro(i){
 
 function startLevel(i){
   S.level=i; S.qi=0; S.hearts=3; S.combo=0;
+  S.wrongs = S.wrongs.filter(w=>w.level!==i);
   S.levelScore=0; S.levelCorrect=0; S.levelTotal=0;
   renderQ();
 }
@@ -583,6 +609,7 @@ function checkOrder(){
   }
   // 显示正确顺序
   document.querySelectorAll('#pool .chip').forEach(c=>c.classList.add('used'));
+  S.lastGiven = S.chosen.map(i=>(q.type==='sort'?q.items:q.words)[i]).join(q.type==='sort'?' → ':'');
   judge(ok, ansHtml);
 }
 
@@ -596,7 +623,7 @@ function matchBlock(q){
     <div class="mcol">${q.right.map((t,i)=>
       `<button class="mitem" id="R${i}" onclick="tapMatch('R',${i})">${t}</button>`).join('')}</div>
   </div>
-  <div class="hint" style="margin-top:12px">先点左边一项，再点右边对应的一项，即可连线。全部连完后才会显示正确答案。</div>`;
+  <div class="hint" style="margin-top:12px">先点左边一项，再点右边对应的一项，即可连线。全部连完后才会显示正确答案。${q.right.length>q.left.length?'<br>注意：右栏有多余的干扰项，请选择最合适的搭配。':''}</div>`;
 }
 function tapMatch(side, idx){
   if(S.matchDone) return;
@@ -642,8 +669,8 @@ function paintMatch(){
     const owner=Object.keys(S.pairs).find(k=>S.pairs[k]===i);
     if(owner!==undefined) cls+=' paired';
     if(S.matchDone){
-      const correctFor = q.a.findIndex(v=>v===i);
-      cls += (S.pairs[correctFor]===i)? ' ok':' bad';
+      const correctFor = q.a.indexOf(i);
+      if(correctFor>=0) cls += (S.pairs[correctFor]===i)? ' ok':' bad';
     }
     el.className=cls;
     let num=el.querySelector('.num'); if(num) num.remove();
@@ -661,7 +688,9 @@ function finishMatch(){
   let right=0;
   q.left.forEach((_,i)=>{ if(S.pairs[i]===q.a[i]) right++; });
   const ok = right===q.left.length;
-  judge(ok, null, `本关连对 ${right} / ${q.left.length} 组`);
+  S.lastGiven = Object.keys(S.pairs).filter(k=>S.pairs[k]!==q.a[k]).map(k=>q.left[k]+'—'+q.right[S.pairs[k]]).join('、');
+  const allCorrect = q.left.map((t,i)=>t+'—'+q.right[q.a[i]]).join('、');
+  judge(ok, allCorrect, `本关连对 ${right} / ${q.left.length} 组`);
 }
 function drawLines(){
   const wrap=document.getElementById('matchWrap'); if(!wrap) return;
@@ -761,6 +790,7 @@ function submitRead(){
       S.levelCorrect++; S.combo++; S.maxCombo=Math.max(S.maxCombo,S.combo);
     }else{
       S.combo=0; loseHeart();
+      recordWrong({type:'mcq', q:s.q, ex:q.ex}, s.opts[chosen], s.opts[s.a]);
     }
   });
   S.levelTotal += q.qs.length;
@@ -779,6 +809,7 @@ function pickOpt(el, disp, orig){
   const q=LEVELS[S.level].qs[S.qi];
   const wrap=document.getElementById('opts');
   wrap.querySelectorAll('.opt').forEach(o=>{ o.disabled=true; });
+  S.lastGiven = q.opts[orig];
   [...wrap.querySelectorAll('.opt')].forEach(o=>{
     const d=Number(o.dataset.disp);
     const oIdx=S.optOrder[d];
@@ -809,7 +840,9 @@ function judge(ok, ansHtml, extra){
   }else{
     S.combo=0;
     loseHeart();
+    recordWrong(q, S.lastGiven, ansHtml);
   }
+  S.lastGiven='';
   const fb=document.getElementById('fb');
   let html=`<div class="fb ${ok?'ok':'bad'}"><b>${ok?'✅ 正确'+(S.combo>1?'  🔥 连对 '+S.combo+' 题':''):'❌ 答错了'}</b>`;
   if(!ok && ansHtml) html+=`<span class="k">正确答案：<b style="display:inline">${ansHtml}</b></span>`;
@@ -884,13 +917,27 @@ function rankFor(t){
   return {t:'汉语新星', s:'🌟'};
 }
 
+function wrongReviewHtml(){
+  if(!S.wrongs.length) return '<div class="review-box"><div class="review-ok">🌟 太棒了，这次全部答对，没有错题！</div></div>';
+  const tName={mcq:'选择题',listen:'听力题',order:'组句题',sort:'排序题',match:'连线题',read:'阅读题'};
+  return `<div class="review-box"><div class="review-title">📝 错题回顾（${S.wrongs.length} 题）</div>
+  <div class="review-list">${S.wrongs.map((w,i)=>`
+    <div class="review-item">
+      <div class="review-meta">${i+1}. ${w.name} · ${tName[w.type]||w.type}</div>
+      <div class="review-q">${w.q}</div>
+      ${w.given?`<div class="review-line">你选了：<span class="wg">${w.given}</span></div>`:''}
+      <div class="review-line">正确答案：<b class="wc">${w.correct}</b></div>
+      ${w.ex?`<div class="review-ex">💡 ${w.ex}</div>`:''}
+    </div>`).join('')}</div></div>`;
+}
+
 function finalScreen(){
   clearTimer();
   const total=starTotal(), r=rankFor(total);
   $app.innerHTML = `
   <div class="screen">
     <div class="head"><h2>闯关完成</h2><span class="pill">⭐ ${total}/15</span></div>
-    <input class="name" id="nameInput" maxlength="12" placeholder="输入你的名字（会印在证书上）" value="${S.name||''}" oninput="redrawCert()">
+    ${wrongReviewHtml()}
     <canvas id="certCanvas"></canvas>
     <div class="bottom">
       <button class="btn btn-main" onclick="saveCert()">⬇ 保存证书图片</button>
@@ -902,8 +949,6 @@ function finalScreen(){
 }
 
 function redrawCert(){
-  const inp=document.getElementById('nameInput');
-  if(inp) S.name = inp.value.trim();
   const done = LEVELS.filter((l,i)=>S.stars[i]>0).length;
   drawCert(S.name||'同学', starTotal(), S.score, done);
 }
@@ -1002,8 +1047,8 @@ function drawCert(name, total, score, done){
   x.textAlign='left'; x.fillStyle='#8a7f9a'; x.font=f(26);
   x.fillText(d.getFullYear()+' 年 '+(d.getMonth()+1)+' 月 '+d.getDate()+' 日', 150, 1412);
   x.strokeStyle='rgba(138,127,154,.5)'; x.lineWidth=2;
-  x.beginPath(); x.moveTo(520,1420); x.lineTo(770,1420); x.stroke();
-  x.fillStyle='#b0a6bb'; x.font=f(22); x.fillText('教师签名', 560, 1456);
+  x.beginPath(); x.moveTo(290,1420); x.lineTo(700,1420); x.stroke();
+  x.fillStyle='#8a7f9a'; x.font=f(20); x.fillText('游戏制作者：MISIS的张老师', 495, 1456);
 
   // 印章
   x.save();
