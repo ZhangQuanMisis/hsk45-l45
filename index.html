@@ -428,6 +428,7 @@ function home(){
       <input class="name" id="nameInput" maxlength="12" placeholder="先输入你的名字（会印在证书上）" value="${escName(S.name)}" oninput="setName(this.value)">
       <button class="btn btn-main" onclick="levelIntro(${maxL<0?0:maxL})">${maxL<0?'▶ 开始闯关':'▶ 继续闯关'}</button>
       <button class="btn btn-sub" onclick="showLevels()">📜 关卡列表</button>
+      <button class="btn btn-ghost" onclick="levelIntro(0)">🔄 从第一关重新测试</button>
     </div>
     <div class="rules">
       <b>🎮 玩法</b><br>
@@ -533,7 +534,7 @@ function renderQ(){
     </div>
     <div class="bottom" id="bottom"></div>
   </div>`;
-  if(q.type==='listen') setTimeout(()=>playListen(), 350);
+  // 听力不再自动播放，由学生自己点「听录音」按钮（每题最多两遍）
   if(q.type==='match') setTimeout(drawLines, 60);
   if(q.type==='read') setTimeout(()=>startReadTimer(q.sec), 150);
 }
@@ -547,7 +548,7 @@ function optBlock(q, order, handler){
 
 function listenBlock(q){
   return `
-  <div style="font-size:11.5px;color:#ded6ff;text-align:center;margin:-2px 0 10px">没有声音请用 Safari 或 Chrome 打开</div>
+  <div style="font-size:11.5px;color:#ded6ff;text-align:center;margin:-2px 0 8px;line-height:1.6">点击下面的按钮播放录音（最多两遍）<br>没有声音请用 Safari 或 Chrome 打开</div>
   <button class="btn btn-main" style="margin-bottom:12px" onclick="playListen()">🔊 听录音（还能听 <span id="lleft">${S.listenLeft}</span> 遍）</button>
   <div style="height:6px"></div>
   ${optBlock(q, S.optOrder, 'pickOpt')}`;
